@@ -32,6 +32,7 @@ public class Client {
     @Column(name = "balance")
     private BigDecimal balance;
 
+
     public Client() {
     }
 

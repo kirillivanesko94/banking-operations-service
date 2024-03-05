@@ -3,11 +3,12 @@ package com.example.servicebankingoperations.controller;
 import com.example.servicebankingoperations.model.Client;
 import com.example.servicebankingoperations.model.ClientDto;
 import com.example.servicebankingoperations.service.ClientService;
+import org.springframework.data.domain.Page;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
-import java.util.List;
 
 
 @RestController
@@ -24,11 +25,17 @@ public class ClientController {
         service.addClient(clientDto);
     }
 
-    @GetMapping("/search")
-    public List<Client> searchClients(@RequestParam(required = false) String fullName,
-                                      @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") Date birthDate,
-                                      @RequestParam(required = false) String email,
-                                      @RequestParam(required = false) String phone) {
-        return service.searchClients(fullName, birthDate, email, phone);
+    @GetMapping("search")
+    public ResponseEntity<Page<Client>> searchClients(@RequestParam(required = false) @DateTimeFormat(pattern="yyyy-MM-dd") Date birthDay,
+                                                      @RequestParam(required = false) String phone,
+                                                      @RequestParam(required = false) String fullName,
+                                                      @RequestParam(required = false) String email,
+                                                      @RequestParam(defaultValue = "0") int pageNumber,
+                                                      @RequestParam(defaultValue = "10") int pageSize,
+                                                      @RequestParam(defaultValue = "fullName") String sortBy) {
+
+        Page<Client> clients = service.searchClients(birthDay, phone, fullName, email, pageNumber, pageSize, sortBy);
+
+        return ResponseEntity.ok().body(clients);
     }
 }
