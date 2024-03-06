@@ -1,20 +1,16 @@
 package com.example.servicebankingoperations.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 
 import java.math.BigDecimal;
-import java.util.Date;
-import java.util.Objects;
-import java.util.UUID;
+import java.util.*;
 
 @Entity
 @Table(name = "client")
 public class Client {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
     @Column(name = "login")
@@ -31,13 +27,16 @@ public class Client {
     private BigDecimal startDeposit;
     @Column(name = "balance")
     private BigDecimal balance;
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Email> emails = new ArrayList<>();
+    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL)
+    private List<Phone> phones = new ArrayList<>();
 
 
     public Client() {
     }
 
-    public Client(UUID id, String login, String fullName, Date birthDay, String password, String accountNumber, BigDecimal startDeposit, BigDecimal balance) {
-        this.id = id;
+    public Client(String login, String fullName, Date birthDay, String password, String accountNumber, BigDecimal startDeposit, BigDecimal balance) {
         this.login = login;
         this.fullName = fullName;
         this.birthDay = birthDay;
@@ -111,6 +110,30 @@ public class Client {
         this.balance = balance;
     }
 
+    public List<Email> getEmails() {
+        return emails;
+    }
+
+    public void setEmails(List<Email> emails) {
+        this.emails = emails;
+    }
+
+    public List<Phone> getPhones() {
+        return phones;
+    }
+
+    public void setPhones(List<Phone> phones) {
+        this.phones = phones;
+    }
+
+    public void addEmail(Email email) {
+        email.setClient(this);
+        emails.add(email);
+    }
+    public void addPhone(Phone phone) {
+        phone.setClient(this);
+        phones.add(phone);
+    }
 
     @Override
     public boolean equals(Object o) {

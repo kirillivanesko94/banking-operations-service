@@ -38,7 +38,6 @@ public class ClientService {
     @Transactional
     public void addClient(ClientDto clientDto) {
         Client newClient = new Client(
-                clientDto.getId(),
                 clientDto.getLogin(),
                 clientDto.getFullName(),
                 clientDto.getBirthDay(),
@@ -48,20 +47,22 @@ public class ClientService {
                 clientDto.getBalance()
         );
 
+
         Email email = new Email(
-                UUID.randomUUID(),
-                clientDto.getId(),
                 clientDto.getEmail()
         );
 
+        newClient.addEmail(email);
+
         Phone phone = new Phone(
-                clientDto.getId(),
                 clientDto.getPhone()
         );
 
+        newClient.addPhone(phone);
+
         clientRepository.save(newClient);
-        emailRepository.save(email);
-        phoneRepository.save(phone);
+//        emailRepository.save(email);
+//        phoneRepository.save(phone);
     }
 
     public Page<Client> searchClients(Date birthDay, String phone, String fullName, String email, int pageNumber, int pageSize, String sortBy) {

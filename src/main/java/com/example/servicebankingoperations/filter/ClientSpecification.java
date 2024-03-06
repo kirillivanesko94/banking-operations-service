@@ -4,6 +4,7 @@ import com.example.servicebankingoperations.model.Client;
 import com.example.servicebankingoperations.model.Email;
 import com.example.servicebankingoperations.model.Phone;
 import jakarta.persistence.criteria.Join;
+import org.hibernate.type.EntityType;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Date;
@@ -16,7 +17,7 @@ public class ClientSpecification {
 
     public static Specification<Client> phoneEquals(String phone) {
         return (root, query, criteriaBuilder) -> {
-            Join<Client, Phone> phoneJoin = root.join("phone");
+            Join<Client, Phone> phoneJoin = root.join("phones");
             return criteriaBuilder.equal(phoneJoin.get("phone"), phone);
         };
     }
@@ -28,8 +29,10 @@ public class ClientSpecification {
 
     public static Specification<Client> emailEquals(String email) {
         return (root, query, criteriaBuilder) -> {
-            Join<Client, Email> emailJoin = root.join("email");
+//            query.where(criteriaBuilder.equal(root.join("emails")))
+            Join<Client, Email> emailJoin = root.join("emails");
             return criteriaBuilder.equal(emailJoin.get("email"), email);
+
         };
     }
 }

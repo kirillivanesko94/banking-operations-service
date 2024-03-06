@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.UUID;
 
 public class ClientDto {
-    private UUID id;
+
     private String login;
     private String fullName;
     private Date birthDay;
@@ -19,13 +19,6 @@ public class ClientDto {
     private String email;
     private String phone;
 
-    public UUID getId() {
-        return id;
-    }
-
-    public void setId(UUID id) {
-        this.id = id;
-    }
 
     public String getLogin() {
         return login;

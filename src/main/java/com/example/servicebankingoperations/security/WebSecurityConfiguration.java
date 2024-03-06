@@ -24,7 +24,7 @@ public class WebSecurityConfiguration {
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests((ath) -> {
                     ath.requestMatchers("/client/add").permitAll();
-                    ath.anyRequest().permitAll();
+                    ath.anyRequest().authenticated();
                 });
         return http.build();
     }

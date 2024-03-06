@@ -1,9 +1,7 @@
 package com.example.servicebankingoperations.model;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
@@ -11,19 +9,20 @@ import java.util.UUID;
 @Table(name = "email")
 public class Email {
     @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-    @Column(name = "client_id")
-    private UUID clientId;
+
     @Column(name = "email")
     private String email;
+    @ManyToOne
+    @JoinColumn(name = "client_id", nullable = false)
+    private Client client;
 
     public Email() {
     }
 
-    public Email(UUID id, UUID clientId, String email) {
-        this.id = id;
-        this.clientId = clientId;
+    public Email(String email) {
         this.email = email;
     }
 
@@ -35,13 +34,6 @@ public class Email {
         this.id = id;
     }
 
-    public UUID getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(UUID clientId) {
-        this.clientId = clientId;
-    }
 
     public String getEmail() {
         return email;
@@ -49,5 +41,14 @@ public class Email {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    @JsonIgnore
+    public Client getClient() {
+        return client;
+    }
+
+    public void setClient(Client client) {
+        this.client = client;
     }
 }

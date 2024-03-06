@@ -18,9 +18,9 @@ create table email (
 create unique index email_unq on email (lower(email));
 
 create table phone (
+    id uuid primary key,
     client_id uuid not null,
-    phone text not null,
-    primary key (client_id, phone)
+    phone text not null
 );
 
 create unique index phone_unq on phone (phone);
