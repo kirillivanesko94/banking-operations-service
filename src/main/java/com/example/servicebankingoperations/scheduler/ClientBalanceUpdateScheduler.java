@@ -5,6 +5,7 @@ import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
@@ -16,12 +17,12 @@ import org.slf4j.LoggerFactory;
 
 @Component
 public class ClientBalanceUpdateScheduler {
-    private Logger logger = LoggerFactory.getLogger(ClientBalanceUpdateScheduler.class);
+    private final Logger logger = LoggerFactory.getLogger(ClientBalanceUpdateScheduler.class);
     @PersistenceContext
     private EntityManager entityManager;
 
     @Scheduled(cron = "0 * * * * *")
-    @Transactional
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void updateClientBalances() {
         logger.info("Method: updateClientBalances it was launched");
         List<Client> clients = entityManager.createQuery("SELECT c FROM Client c", Client.class).getResultList();
