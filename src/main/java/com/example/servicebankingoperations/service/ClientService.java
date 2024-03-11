@@ -6,12 +6,11 @@ import com.example.servicebankingoperations.model.ClientDto;
 import com.example.servicebankingoperations.model.Email;
 import com.example.servicebankingoperations.model.Phone;
 import com.example.servicebankingoperations.repositories.ClientRepository;
-import com.example.servicebankingoperations.repositories.EmailRepository;
-import com.example.servicebankingoperations.repositories.PhoneRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -21,10 +20,11 @@ import java.util.Date;
 public class ClientService {
     private final ClientRepository clientRepository;
 
-//    private final BCryptPasswordEncoder passwordEncoder;
+    private final PasswordEncoder passwordEncoder;
 
-    public ClientService(ClientRepository repository) {
-        this.clientRepository = repository;
+    public ClientService(ClientRepository clientRepository, PasswordEncoder passwordEncoder) {
+        this.clientRepository = clientRepository;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Transactional
@@ -33,7 +33,7 @@ public class ClientService {
                 clientDto.getLogin(),
                 clientDto.getFullName(),
                 clientDto.getBirthDay(),
-                clientDto.getPassword(),
+                passwordEncoder.encode(clientDto.getPassword()),
                 clientDto.getAccountNumber(),
                 clientDto.getStartDeposit(),
                 clientDto.getBalance()
