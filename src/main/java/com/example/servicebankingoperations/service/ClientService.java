@@ -15,24 +15,16 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.awt.print.Pageable;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
-import java.util.UUID;
-import java.util.function.Predicate;
 
 @Service
 public class ClientService {
     private final ClientRepository clientRepository;
-    private final EmailRepository emailRepository;
-    private final PhoneRepository phoneRepository;
+
 //    private final BCryptPasswordEncoder passwordEncoder;
 
-    public ClientService(ClientRepository repository, EmailRepository emailRepository, PhoneRepository phoneRepository) {
+    public ClientService(ClientRepository repository) {
         this.clientRepository = repository;
-        this.emailRepository = emailRepository;
-        this.phoneRepository = phoneRepository;
     }
 
     @Transactional
@@ -61,8 +53,6 @@ public class ClientService {
         newClient.addPhone(phone);
 
         clientRepository.save(newClient);
-//        emailRepository.save(email);
-//        phoneRepository.save(phone);
     }
 
     public Page<Client> searchClients(Date birthDay, String phone, String fullName, String email, int pageNumber, int pageSize, String sortBy) {

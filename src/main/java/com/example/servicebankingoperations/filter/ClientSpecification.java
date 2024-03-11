@@ -4,7 +4,6 @@ import com.example.servicebankingoperations.model.Client;
 import com.example.servicebankingoperations.model.Email;
 import com.example.servicebankingoperations.model.Phone;
 import jakarta.persistence.criteria.Join;
-import org.hibernate.type.EntityType;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.Date;

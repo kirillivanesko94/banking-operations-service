@@ -25,7 +25,7 @@ public class ClientBalanceUpdateScheduler {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void updateClientBalances() {
         logger.info("Method: updateClientBalances it was launched");
-        List<Client> clients = entityManager.createQuery("SELECT c FROM Client c", Client.class).getResultList();
+        List<Client> clients = entityManager.createQuery("SELECT c FROM Client c WHERE startDeposit > 0" , Client.class).getResultList();
         clients.forEach(client -> {
             BigDecimal newBalance = client.getBalance().multiply(new BigDecimal("1.05")).setScale(2, RoundingMode.HALF_UP);
             BigDecimal maxBalance = client.getStartDeposit().multiply(new BigDecimal("2.07")).setScale(2, RoundingMode.HALF_UP);
