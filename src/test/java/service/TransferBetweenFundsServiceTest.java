@@ -1,16 +1,21 @@
 package service;
 
+import com.example.servicebankingoperations.exception.TransferMoneyException;
 import com.example.servicebankingoperations.model.entity.Client;
 import com.example.servicebankingoperations.repositories.ClientRepository;
 import com.example.servicebankingoperations.service.TransferBetweenFundsService;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
 
 import java.sql.Date;
 import java.util.UUID;
+import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -24,7 +29,7 @@ public class TransferBetweenFundsServiceTest {
         sender.setId(UUID.fromString("6935EE31-8E07-4962-BAB6-DCBCF06FFB86"));
         sender.setLogin("user1");
         sender.setFullName("Petya");
-        sender.setBirthDay(Date.valueOf("01.01.2023"));
+        sender.setBirthDay(Date.valueOf("2023-01-01"));
         sender.setPassword("password123");
         sender.setAccountNumber("1234567890");
         sender.setStartDeposit(BigDecimal.valueOf(1000));
@@ -33,23 +38,32 @@ public class TransferBetweenFundsServiceTest {
         recipient.setId(UUID.fromString("850D655B-8A51-4A6B-8903-2C8A75C15355"));
         recipient.setLogin("user2");
         recipient.setFullName("Valera");
-        recipient.setBirthDay(Date.valueOf("01.01.2022"));
+        recipient.setBirthDay(Date.valueOf("2022-01-01"));
         recipient.setPassword("password1234");
         recipient.setAccountNumber("012345");
         recipient.setStartDeposit(BigDecimal.valueOf(500));
         recipient.setBalance(BigDecimal.valueOf(500));
     }
 
-    @Test
-    public void testTransferMoney() {
-        BigDecimal transferSum = BigDecimal.valueOf(500);
-
+    @ParameterizedTest
+    @MethodSource("getTransferSum")
+    public void testTransferMoney(BigDecimal transferSum) {
         when(repository.findClientByUUID(sender.getId())).thenReturn(sender);
         when(repository.findClientByUUID(recipient.getId())).thenReturn(recipient);
 
         service.transferMoney(sender.getId(), recipient.getId(), transferSum);
 
-        assertEquals(sender.getBalance(), BigDecimal.valueOf(500));
-        assertEquals(recipient.getBalance(), BigDecimal.valueOf(1500));
+        BigDecimal expectedSenderBalance = sender.getBalance().subtract(transferSum);
+        BigDecimal expectedRecipientBalance = recipient.getBalance().add(transferSum);
+
+        assertEquals(sender.getBalance().subtract(transferSum), expectedSenderBalance);
+        assertEquals(recipient.getBalance().add(transferSum), expectedRecipientBalance);
+    }
+    private static Stream<Arguments> getTransferSum() {
+        return Stream.of(
+                Arguments.of(BigDecimal.valueOf(500),
+                Arguments.of(BigDecimal.valueOf(1000),
+                Arguments.of(BigDecimal.valueOf(1500))
+        )));
     }
 }
