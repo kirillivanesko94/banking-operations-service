@@ -1,6 +1,6 @@
 package service;
 
-import com.example.servicebankingoperations.model.Client;
+import com.example.servicebankingoperations.model.entity.Client;
 import com.example.servicebankingoperations.repositories.ClientRepository;
 import com.example.servicebankingoperations.service.TransferBetweenFundsService;
 import org.junit.jupiter.api.Test;

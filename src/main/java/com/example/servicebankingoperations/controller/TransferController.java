@@ -17,6 +17,7 @@ public class TransferController {
     public TransferController(TransferBetweenFundsService service) {
         this.service = service;
     }
+
     @PatchMapping
     public void transferMoney(@RequestParam UUID senderClientUUID,
                               @RequestParam UUID recepientClientUUID,

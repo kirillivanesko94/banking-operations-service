@@ -1,4 +1,4 @@
-package com.example.servicebankingoperations.model;
+package com.example.servicebankingoperations.model.entity;
 
 import jakarta.persistence.*;
 
@@ -130,6 +130,7 @@ public class Client {
         email.setClient(this);
         emails.add(email);
     }
+
     public void addPhone(Phone phone) {
         phone.setClient(this);
         phones.add(phone);

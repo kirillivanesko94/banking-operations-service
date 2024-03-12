@@ -1,36 +1,30 @@
-package com.example.servicebankingoperations.model;
+package com.example.servicebankingoperations.model.entity;
 
+import com.example.servicebankingoperations.model.entity.Client;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 
 import java.util.UUID;
 
 @Entity
-@Table(name = "phone")
-public class Phone {
+@Table(name = "email")
+public class Email {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id")
     private UUID id;
-    @Column(name = "phone")
-    private String phone;
+
+    @Column(name = "email")
+    private String email;
     @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
     private Client client;
 
-    public Phone() {
+    public Email() {
     }
 
-    public Phone(String phone) {
-        this.phone = phone;
-    }
-
-    public String getPhone() {
-        return phone;
-    }
-
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public Email(String email) {
+        this.email = email;
     }
 
     public UUID getId() {
@@ -40,6 +34,16 @@ public class Phone {
     public void setId(UUID id) {
         this.id = id;
     }
+
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     @JsonIgnore
     public Client getClient() {
         return client;

@@ -1,4 +1,4 @@
-package com.example.servicebankingoperations.model;
+package com.example.servicebankingoperations.model.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;

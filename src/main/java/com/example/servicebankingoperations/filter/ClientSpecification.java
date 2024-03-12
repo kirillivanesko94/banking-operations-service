@@ -1,8 +1,8 @@
 package com.example.servicebankingoperations.filter;
 
-import com.example.servicebankingoperations.model.Client;
-import com.example.servicebankingoperations.model.Email;
-import com.example.servicebankingoperations.model.Phone;
+import com.example.servicebankingoperations.model.entity.Client;
+import com.example.servicebankingoperations.model.entity.Email;
+import com.example.servicebankingoperations.model.entity.Phone;
 import jakarta.persistence.criteria.Join;
 import org.springframework.data.jpa.domain.Specification;
 

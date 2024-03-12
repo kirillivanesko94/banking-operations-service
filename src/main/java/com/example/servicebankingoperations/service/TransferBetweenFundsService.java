@@ -1,7 +1,7 @@
 package com.example.servicebankingoperations.service;
 
 import com.example.servicebankingoperations.exception.TransferMoneyException;
-import com.example.servicebankingoperations.model.Client;
+import com.example.servicebankingoperations.model.entity.Client;
 import com.example.servicebankingoperations.repositories.ClientRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

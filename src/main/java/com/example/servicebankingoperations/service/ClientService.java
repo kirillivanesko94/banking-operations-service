@@ -1,10 +1,10 @@
 package com.example.servicebankingoperations.service;
 
 import com.example.servicebankingoperations.filter.ClientSpecification;
-import com.example.servicebankingoperations.model.Client;
-import com.example.servicebankingoperations.model.ClientDto;
-import com.example.servicebankingoperations.model.Email;
-import com.example.servicebankingoperations.model.Phone;
+import com.example.servicebankingoperations.model.entity.Client;
+import com.example.servicebankingoperations.model.dto.ClientDto;
+import com.example.servicebankingoperations.model.entity.Email;
+import com.example.servicebankingoperations.model.entity.Phone;
 import com.example.servicebankingoperations.repositories.ClientRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -1,6 +1,6 @@
 package com.example.servicebankingoperations.scheduler;
 
-import com.example.servicebankingoperations.model.Client;
+import com.example.servicebankingoperations.model.entity.Client;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -25,7 +25,7 @@ public class ClientBalanceUpdateScheduler {
     @Transactional(isolation = Isolation.SERIALIZABLE)
     public void updateClientBalances() {
         logger.info("Method: updateClientBalances it was launched");
-        List<Client> clients = entityManager.createQuery("SELECT c FROM Client c WHERE startDeposit > 0" , Client.class).getResultList();
+        List<Client> clients = entityManager.createQuery("SELECT c FROM Client c WHERE startDeposit > 0", Client.class).getResultList();
         clients.forEach(client -> {
             BigDecimal newBalance = client.getBalance().multiply(new BigDecimal("1.05")).setScale(2, RoundingMode.HALF_UP);
             BigDecimal maxBalance = client.getStartDeposit().multiply(new BigDecimal("2.07")).setScale(2, RoundingMode.HALF_UP);

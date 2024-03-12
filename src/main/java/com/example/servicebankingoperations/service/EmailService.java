@@ -1,7 +1,7 @@
 package com.example.servicebankingoperations.service;
 
-import com.example.servicebankingoperations.model.Client;
-import com.example.servicebankingoperations.model.Email;
+import com.example.servicebankingoperations.model.entity.Client;
+import com.example.servicebankingoperations.model.entity.Email;
 import com.example.servicebankingoperations.repositories.ClientRepository;
 import com.example.servicebankingoperations.repositories.EmailRepository;
 import org.springframework.stereotype.Service;

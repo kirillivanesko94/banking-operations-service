@@ -20,6 +20,7 @@ public class PhoneController {
                                   @RequestParam String phone) {
         service.updatePhoneByClientUUID(clientId, phoneId, phone);
     }
+
     @DeleteMapping("delete")
     public void deletePhoneNumber(@RequestParam UUID clientId,
                                   @RequestParam UUID phoneId) {
