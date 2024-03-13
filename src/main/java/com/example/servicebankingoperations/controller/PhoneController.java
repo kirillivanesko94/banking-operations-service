@@ -14,6 +14,12 @@ public class PhoneController {
         this.service = service;
     }
 
+    @PatchMapping("create")
+    public void addNewEmail(@RequestParam UUID clientId,
+                            @RequestParam String phone) {
+        service.addPhone(clientId, phone);
+    }
+
     @PatchMapping("update")
     public void updatePhoneNumber(@RequestParam UUID clientId,
                                   @RequestParam UUID phoneId,

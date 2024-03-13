@@ -14,6 +14,12 @@ public class EmailController {
         this.service = service;
     }
 
+    @PatchMapping("create")
+    public void addNewEmail(@RequestParam UUID clientId,
+                            @RequestParam String email) {
+        service.addEmail(clientId, email);
+    }
+
     @PatchMapping("update")
     public void updateEmail(@RequestParam UUID clientId,
                             @RequestParam UUID emailId,

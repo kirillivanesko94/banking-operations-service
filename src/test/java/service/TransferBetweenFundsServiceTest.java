@@ -1,21 +1,18 @@
 package service;
 
-import com.example.servicebankingoperations.exception.TransferMoneyException;
 import com.example.servicebankingoperations.model.entity.Client;
 import com.example.servicebankingoperations.repositories.ClientRepository;
 import com.example.servicebankingoperations.service.TransferBetweenFundsService;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.math.BigDecimal;
-
 import java.sql.Date;
 import java.util.UUID;
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
@@ -51,19 +48,20 @@ public class TransferBetweenFundsServiceTest {
         when(repository.findClientByUUID(sender.getId())).thenReturn(sender);
         when(repository.findClientByUUID(recipient.getId())).thenReturn(recipient);
 
-        service.transferMoney(sender.getId(), recipient.getId(), transferSum);
-
         BigDecimal expectedSenderBalance = sender.getBalance().subtract(transferSum);
         BigDecimal expectedRecipientBalance = recipient.getBalance().add(transferSum);
 
-        assertEquals(sender.getBalance().subtract(transferSum), expectedSenderBalance);
-        assertEquals(recipient.getBalance().add(transferSum), expectedRecipientBalance);
+        service.transferMoney(sender.getId(), recipient.getId(), transferSum);
+
+        assertEquals(expectedSenderBalance, sender.getBalance());
+        assertEquals(expectedRecipientBalance, recipient.getBalance());
     }
+
     private static Stream<Arguments> getTransferSum() {
         return Stream.of(
                 Arguments.of(BigDecimal.valueOf(500),
-                Arguments.of(BigDecimal.valueOf(1000),
-                Arguments.of(BigDecimal.valueOf(1500))
-        )));
+                        Arguments.of(BigDecimal.valueOf(1000),
+                                Arguments.of(BigDecimal.valueOf(1500))
+                        )));
     }
 }

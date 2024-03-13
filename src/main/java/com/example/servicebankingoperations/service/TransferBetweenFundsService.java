@@ -22,7 +22,7 @@ public class TransferBetweenFundsService {
         this.repository = repository;
     }
 
-    @Transactional(isolation = Isolation.READ_COMMITTED)
+    @Transactional(isolation = Isolation.SERIALIZABLE)
     public void transferMoney(UUID senderClientUUID, UUID recepientClientUUID, BigDecimal transferSum) {
         Client senderClient = repository.findClientByUUID(senderClientUUID);
         Client recipientClient = repository.findClientByUUID(recepientClientUUID);

@@ -1,6 +1,5 @@
 package com.example.servicebankingoperations.model.entity;
 
-import com.example.servicebankingoperations.model.entity.Client;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 

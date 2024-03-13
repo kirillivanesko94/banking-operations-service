@@ -1,6 +1,5 @@
 package com.example.servicebankingoperations.security;
 
-import com.example.servicebankingoperations.scheduler.ClientBalanceUpdateScheduler;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import jakarta.servlet.FilterChain;
