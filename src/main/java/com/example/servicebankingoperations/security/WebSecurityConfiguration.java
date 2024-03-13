@@ -36,6 +36,7 @@ public class WebSecurityConfiguration {
                 .authorizeHttpRequests((ath) -> {
                     ath.requestMatchers("/client/add").permitAll();
                     ath.requestMatchers("/auth").permitAll();
+                    ath.requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll();
                     ath.anyRequest().authenticated();
                 });
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
